@@ -14,7 +14,7 @@ class CombatScene( cocos.scene.Scene ):
 
         # Initialize the ship
         self.bookCraft = ship.Ship()
-        self.add(self.bookCraft.sprite, )
+        self.add(self.bookCraft )
 
         self.schedule_interval(self.mainCombatTimer, 0.05)
         #self.mainCombatTimer(10)
@@ -46,6 +46,9 @@ class CombatScene( cocos.scene.Scene ):
         if key == pyglet.window.key.D:
             self.bookCraft.craftMovingRight = False
 
+
+    def on_key_release(self,key,modifiers):
+        pass
 
     def on_enter(self):
         super(CombatScene,self).on_enter()

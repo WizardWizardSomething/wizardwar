@@ -5,12 +5,10 @@ from pyglet import image
 from cocos.actions import *
 
 
-class Ship( ):
+class Ship(cocos.sprite.Sprite):
     def __init__(self):
-        # super( Ship, self ).__init()
-
-        pic = image.load(os.path.normpath(r'../assets/Graphics/BookCraft.png'))
-        self.sprite = Sprite(pic, (250, 250))
+        super( Ship, self ).__init__(image.load(os.path.normpath(r'../assets/Graphics/BookCraft.png')))
+        self.position = (250,250)
 
         # Constants for craft movement
         self.CRAFT_MAX_VELOCITY = 1000
@@ -28,7 +26,7 @@ class Ship( ):
 
     def move(self, dx, dy):
         move = MoveBy((dx, dy))
-        self.sprite.do(move)
+        self.do(move)
 
     # CMB: Does all the velocity math before updating the crafts position
     def updateCraftVelocity(self):
@@ -75,9 +73,6 @@ class Ship( ):
 
         # Physically move the ship
         self.move(self.craft_x_velocity, self.craft_y_velocity)
-
-    def draw(self):
-        self.sprite.draw()
 
     def rotate(self, ):
         pass
