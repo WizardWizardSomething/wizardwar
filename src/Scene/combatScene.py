@@ -46,10 +46,6 @@ class CombatScene( cocos.scene.Scene ):
         if key == pyglet.window.key.D:
             self.bookCraft.craftMovingRight = False
 
-
-    def on_key_release(self,key,modifiers):
-        pass
-
     def on_enter(self):
         super(CombatScene,self).on_enter()
         cocos.director.director.window.push_handlers(self)
