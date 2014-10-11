@@ -10,7 +10,7 @@ class CombatScene( cocos.scene.Scene ):
     def __init__(self):
         super( CombatScene, self ).__init__()
         self.bookCraft = ship.Ship()
-        self.add(self.bookCraft.sprite, )
+        self.add(self.bookCraft )
 
     def on_mouse_motion(self, x, y, dx, dy):
         print dx, dy
