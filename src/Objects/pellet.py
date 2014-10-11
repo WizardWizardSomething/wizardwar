@@ -1,11 +1,7 @@
 from __future__ import division
-from Objects import moduleTest
 import os
 import cocos
-from cocos.sprite import *
 from pyglet import image
-from cocos.actions import *
-import math
 
 
 class Pellet(cocos.sprite.Sprite):

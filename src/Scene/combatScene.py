@@ -4,7 +4,7 @@ from Layers import titleText
 import pyglet
 from cocos.audio.pygame.music import *
 import os
-from Objects import ship, pellet
+from Objects import ship
 from cocos.audio.pygame.music import *
 
 #test imports
