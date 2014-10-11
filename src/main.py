@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 import cocos
 
 if __name__ == "__main__":
-    cocos.director.director.init(resizable=True)
+    cocos.director.director.init(resizable=True,width=1024,height=768)
 
     # And now, start the application, starting with main_scene
     #cocos.director.push_handlers(pyglet.window.key.KeyStateHandler())

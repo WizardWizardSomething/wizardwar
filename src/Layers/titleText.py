@@ -9,11 +9,11 @@ class titleText(cocos.layer.Layer):
     def __init__(self):
         super(titleText, self).__init__()
         self.title = label.labelClass('Room of Runes',False,32)
-        self.title.position = 320,240
+        self.title.position = cocos.director.director.get_window_size()[0]/2,(cocos.director.director.get_window_size()[1]+100)/2
         self.startText = label.labelClass('Start',self.shouldBeHighlighted(0),24)
-        self.startText.position = 320,140
+        self.startText.position = cocos.director.director.get_window_size()[0]/2,(cocos.director.director.get_window_size()[1]-40)/2
         self.exitText = label.labelClass('Exit',self.shouldBeHighlighted(1),24)
-        self.exitText.position = 320,100
+        self.exitText.position = cocos.director.director.get_window_size()[0]/2,(cocos.director.director.get_window_size()[1]-100)/2
         self.add(self.title)
         self.add(self.startText)
         self.add(self.exitText)
