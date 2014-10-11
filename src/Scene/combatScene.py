@@ -1,7 +1,9 @@
 from Layers.roomBorder import roomBorder
+from Scene.gameOver import gameOver
 import cocos
 from Layers import titleText
 from cocos.collision_model import CollisionManagerBruteForce
+from cocos.scenes import FlipX3DTransition
 import pyglet
 from cocos.audio.pygame.music import *
 import os
@@ -103,6 +105,8 @@ class CombatScene( cocos.scene.Scene ):
             for item in map(str, self.collisionManager.objs_colliding(ship)):
                 if 'pellet.Pellet' in item:
                     ship.health -= 50
+                if 'ship.Ship' in item:
+                    cocos.director.director.replace(FlipX3DTransition(gameOver(),duration=1))
 
             # check if this should be dead
             if ship.health <= 0:
