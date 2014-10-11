@@ -17,6 +17,7 @@ class Ship(cocos.sprite.Sprite):
         self.drawModules()
 
         self.position = (250,250)
+        self.heath = 100
         self.bulletList = []
         self.centerPoint = self.get_rect().center
         self.midline = (self.centerPoint, self.get_rect().midtop)

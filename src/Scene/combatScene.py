@@ -28,6 +28,7 @@ class CombatScene( cocos.scene.Scene ):
         # Initialize the enemies
         self.enemyList = []
         self.enemyTimer = 0
+        self.enemycounter = 0
         self.explosionList = []
 
         self.roomBorder = roomBorder()
@@ -112,10 +113,13 @@ class CombatScene( cocos.scene.Scene ):
                         self.remove(bullet)
                         self.bookCraft.bulletList.remove(bullet)
                 if 'ship.Ship' in item:
-                    cocos.director.director.replace(FlipX3DTransition(gameOver(),duration=1))
+                    self.bookCraft.heath -= 15
+                    if self.bookCraft.heath <= 0:
+                        cocos.director.director.replace(FlipX3DTransition(gameOver(),duration=1))
 
             # check if this should be dead
             if ship.health <= 0:
+                self.enemycounter += 1
                 huh = Sound(os.path.normpath(r'../assets/VEC3 FX Impact 35.wav'))
                 huh.play()
                 splosion = explosion.Explosion(ship.get_rect().center)
