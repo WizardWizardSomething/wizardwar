@@ -12,7 +12,7 @@ class mainMenu(cocos.scene.Scene):
         self.title = titleText.titleText()
         self.add(self.title)
         mixer.init()
-        load(r'..\assets/RoRNewTheme.wav')
+        load(r'..\assets/RoRNewTheme.mp3')
         play(loops=1)
 
     def on_key_press(self,key,modifiers):
