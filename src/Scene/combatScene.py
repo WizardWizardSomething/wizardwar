@@ -11,9 +11,11 @@ class CombatScene( cocos.scene.Scene ):
         super( CombatScene, self ).__init__()
         self.bookCraft = ship.Ship()
         self.add(self.bookCraft )
+        self.mouserel = (0, 0)
 
     def on_mouse_motion(self, x, y, dx, dy):
-        print dx, dy
+        self.mouserel = (dx, dy)
+        self.bookCraft.rotate((x, y))
 
     def on_mouse_press(self, *args):
         print args
