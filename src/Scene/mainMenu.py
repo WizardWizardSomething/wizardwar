@@ -16,6 +16,9 @@ class mainMenu(cocos.scene.Scene):
             self.title.changeCursor(self.title.cursorPosition+1)
         elif(key==pyglet.window.key.UP):
             self.title.changeCursor(self.title.cursorPosition-1)
+        elif(key==pyglet.window.key.ENTER):
+            if(self.title.cursorPosition==1):
+                exit()
 
     def on_enter(self):
         super(mainMenu,self).on_enter()
