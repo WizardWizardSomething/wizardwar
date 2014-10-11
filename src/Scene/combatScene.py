@@ -101,7 +101,7 @@ class CombatScene( cocos.scene.Scene ):
     def updateEnemies(self):
         self.enemyTimer += 1
         if self.enemyTimer % 100 == 0:
-            for x in xrange(random.randint(0, 10)):
+            for x in xrange(random.randint(2, 15)):
                 newEnemy = enemyships.Enemy((0, random.randint(0, 768)), random.randint(200, 340), random.randint(50, 1000))
                 self.collisionManager.add(newEnemy)
                 self.add(newEnemy)
@@ -119,12 +119,22 @@ class CombatScene( cocos.scene.Scene ):
                         self.bookCraft.bulletList.remove(bullet)
                 if 'ship.Ship' in item:
                     self.bookCraft.heath -= 15
+                    huh = Sound(os.path.normpath(r'../assets/VEC3 FX Impact 35.wav'))
+                    huh.play()
+                    splosion = explosion.Explosion(ship.get_rect().center)
+                    self.add(splosion)
+                    self.explosionList.append(splosion)
+                    self.collisionManager.remove_tricky(ship)
+                    self.remove(ship)
+                    self.enemyList.remove(ship)
+                    self.title.updateHP(self.bookCraft.heath)
                     if self.bookCraft.heath <= 0:
                         cocos.director.director.replace(FlipX3DTransition(gameOver(),duration=1))
 
             # check if this should be dead
             if ship.health <= 0:
                 self.enemycounter += 1
+                self.title.incrementKills(self.enemycounter)
                 huh = Sound(os.path.normpath(r'../assets/VEC3 FX Impact 35.wav'))
                 huh.play()
                 splosion = explosion.Explosion(ship.get_rect().center)
