@@ -207,7 +207,7 @@ class Ship(cocos.sprite.Sprite):
 
     def point_pos(self, x0, y0, d, theta):
         theta_rad = math.pi/2 - math.radians(theta)
-        return x0 + d*math.cos(theta_rad), y0 + d*math.sin(theta_rad)        pass
+        return x0 + d*math.cos(theta_rad), y0 + d*math.sin(theta_rad)
 
     def updateCollisionPos(self):
         self.cshape.center = Vector2(self.centerPoint[0],self.centerPoint[1])
