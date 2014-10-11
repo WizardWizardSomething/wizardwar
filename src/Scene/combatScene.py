@@ -1,4 +1,5 @@
 from Layers.roomBorder import roomBorder
+from Layers import combatText
 from Scene.gameOver import gameOver
 import cocos
 from Layers import titleText
@@ -17,12 +18,16 @@ from pyglet.window import key
 
 class CombatScene( cocos.scene.Scene ):
     collisionManager = None
+    title = None
     def __init__(self):
         super( CombatScene, self ).__init__()
 
+        # Render da text
+        self.title = combatText.CombatText()
+        self.add(self.title)
+
         # Initialize the ship
         self.bookCraft = ship.Ship()
-        #self.bookCraft = bookCraft()
 
         self.collisionManager = CollisionManagerBruteForce()
         # Initialize the enemies
