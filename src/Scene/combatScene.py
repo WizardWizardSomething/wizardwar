@@ -18,6 +18,16 @@ class CombatScene( cocos.scene.Scene ):
     def on_mouse_press(self, *args):
         print args
 
+    def on_key_press(self,key,modifiers):
+        if key==pyglet.window.key.W:
+            self.bookCraft.move(0, 100)
+        elif key==pyglet.window.key.S:
+            self.bookCraft.move(0, -100)
+        elif key==pyglet.window.key.A:
+            self.bookCraft.move(-100, 0)
+        elif key==pyglet.window.key.D:
+            self.bookCraft.move(100, 0)
+
     def on_enter(self):
         super(CombatScene,self).on_enter()
         cocos.director.director.window.push_handlers(self)

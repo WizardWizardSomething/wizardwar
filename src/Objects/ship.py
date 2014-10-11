@@ -2,6 +2,7 @@ import os
 import cocos
 from cocos.sprite import *
 from pyglet import image
+from cocos.actions import *
 
 
 class Ship( ):
