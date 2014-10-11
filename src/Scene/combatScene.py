@@ -22,9 +22,6 @@ class CombatScene( cocos.scene.Scene ):
         self.add(self.roomBorder)
         self.add(self.bookCraft )
         self.mouserel = (0, 0)
-        mixer.pre_init(44100, -16, 2, 2048)
-        load(os.path.normpath(r'../assets/RoRFight2.mp3'))
-        play(loops=-1)
 
         self.schedule_interval(self.mainCombatTimer, 0.05)
         #self.mainCombatTimer(10)
@@ -59,6 +56,10 @@ class CombatScene( cocos.scene.Scene ):
 
     def on_enter(self):
         super(CombatScene,self).on_enter()
+        if(not get_busy()):
+            load(os.path.normpath(r'../assets/RoRFight2.mp3'))
+            set_volume(1)
+            play(loops=-1)
         cocos.director.director.window.push_handlers(self)
 
     def on_exit(self):
