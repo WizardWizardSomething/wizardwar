@@ -103,8 +103,8 @@ class CombatScene( cocos.scene.Scene ):
         if not self.enemyList: return
         for ship in self.enemyList:
             for item in map(str, self.collisionManager.objs_colliding(ship)):
-                if 'Pellet'.upper() not in item.upper(): continue
-                ship.health -= 50
+                if 'Pellet'.upper() in item.upper():
+                    ship.health -= 50
                 for bullet in self.bookCraft.bulletList:
                     if bullet in self.collisionManager.objs_colliding(ship):
                         self.collisionManager.remove_tricky(bullet)
