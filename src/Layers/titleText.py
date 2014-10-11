@@ -25,6 +25,10 @@ class titleText(cocos.layer.Layer):
             return False
 
     def changeCursor(self,position):
+        if(position>1):
+            position=0
+        if(position<0):
+            position=1
         self.cursorPosition = position
         if(position == 0):
             self.startText.changeHighlighted(True)
