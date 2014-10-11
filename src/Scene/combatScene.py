@@ -9,6 +9,7 @@ from cocos.audio.pygame.music import *
 import os
 from Objects import ship, enemyships, explosion, pellet
 from cocos.audio.pygame.music import *
+from cocos.audio.pygame.mixer import *
 import random
 
 #test imports
@@ -115,6 +116,8 @@ class CombatScene( cocos.scene.Scene ):
 
             # check if this should be dead
             if ship.health <= 0:
+                huh = Sound(os.path.normpath(r'../assets/VEC3 FX Impact 35.wav'))
+                huh.play()
                 splosion = explosion.Explosion(ship.get_rect().center)
                 self.add(splosion)
                 self.explosionList.append(splosion)

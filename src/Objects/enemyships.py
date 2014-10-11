@@ -16,7 +16,7 @@ class Enemy(cocos.sprite.Sprite):
         self.angle = angle
         self.speed = speed
         self.time_alive = 0
-        self.cshape = CircleShape(Vector2(self.get_rect().center[0], self.get_rect().center[1]), self.width/2)
+        self.cshape = CircleShape(Vector2(self.get_rect().center[0], self.get_rect().center[1]), self.width/1.5)
 
     def fly(self):
         newPoint = self.point_pos(self.position[0], self.position[1], -self.speed, self.angle)
