@@ -1,5 +1,5 @@
 from __future__ import division
-from Objects import moduleTest
+from Objects import moduleTest, cauldronModule, cockpitModule, crateModule, propulsionModule, wandModule
 import os
 import cocos
 from cocos.sprite import *
@@ -13,12 +13,12 @@ class Ship(cocos.sprite.Sprite):
     def __init__(self):
         super( Ship, self ).__init__(image.load(os.path.normpath(r'../assets/Graphics/BookCraft.png')))
 
-        self.moduleDebug = moduleTest.TestModule()
-        self.add(self.moduleDebug)
+        self.drawModules()
 
         self.position = (250,250)
-        self.centerPoint = self.get_rect().center
         self.bulletList = []
+        self.centerPoint = self.get_rect().center
+        self.midline = (self.centerPoint, self.get_rect().midtop)
 
         # Constants for craft movement
         self.CRAFT_MAX_VELOCITY = 1000
@@ -97,12 +97,93 @@ class Ship(cocos.sprite.Sprite):
     def getCenter(self):
         return self.get_rect().center
 
+    def getMidline(self):
+        return (self.getCenter(), self.get_AABB().midtop)
+
     def calcVector(self, tupleOfPts):
         return(tupleOfPts[0][0]-tupleOfPts[0][1], tupleOfPts[0][1]-tupleOfPts[1][1])
 
     # Draw the modules on top of the ship based on the ships position and the
     # layout of the modules
     def drawModules(self):
+        MODULE_WIDTH = 20
+        MODULE_HEIGHT = 20
+        CRAFT_SIZE = self.get_rect().size
+
+        # Create an empty Matrix, which will be iterated through for rendering later
+        X_LENGTH = 9
+        Y_LENGTH = 6
+        ModuleGrid = [["EMPTY" for x in range(Y_LENGTH)] for x in range(X_LENGTH)]
+
+        # Hardcoded values for the module render values.
+        # 'EMPTY' means there is no module there, and nothing should be rendered
+        # 'RESERVED' means another module is overlapping that space (could probably be implemented better)
+        # Reserved value exists mainly to keep the player from overlapping modules during module placement
+        # in crafting.
+        ModuleGrid[0][0] = "RESERVED"
+        ModuleGrid[0][1] = "PROPULSION"
+        ModuleGrid[1][1] = "POWER"
+        ModuleGrid[1][2] = "CRATE"
+        #ModuleGrid[2][4] = "WAND"
+        ModuleGrid[3][3] = "POWER"
+        ModuleGrid[4][1] = "CRATE"
+        ModuleGrid[4][2] = "COCKPIT"
+        ModuleGrid[4][3] = "CRATE"
+
+        ModuleGrid[5][3] = "POWER"
+        ModuleGrid[7][1] = "POWER"
+        ModuleGrid[7][2] = "CRATE"
+        ModuleGrid[8][0] = "RESERVED"
+        ModuleGrid[8][1] = "PROPULSION"
+
+        # Render the module grid
+        for x in range(X_LENGTH):
+            for y in range(Y_LENGTH):
+                # Render crate modules
+                if ModuleGrid[x][y] == "CRATE":
+                    self.moduleDebug = crateModule.CrateModule()
+                    moduleGridStartingPosition = ((CRAFT_SIZE[0] / 2) - (MODULE_WIDTH / 2),
+                                                  (CRAFT_SIZE[1] / 2) - (MODULE_WIDTH / 2))
+                    self.moduleDebug.position = (moduleGridStartingPosition[0] * -1 + (x * MODULE_WIDTH),
+                                                 moduleGridStartingPosition[1] - (y * MODULE_WIDTH))
+                    self.add(self.moduleDebug)
+
+                # Render Propulsion Module
+                elif ModuleGrid[x][y] == "PROPULSION":
+                    self.moduleDebug = propulsionModule.PropulsionModule()
+                    moduleGridStartingPosition = ((CRAFT_SIZE[0] / 2) - (MODULE_WIDTH / 2),
+                                                  (CRAFT_SIZE[1] / 2) - (MODULE_WIDTH / 2))
+                    self.moduleDebug.position = (moduleGridStartingPosition[0] * -1 + (x * MODULE_WIDTH),
+                                                 moduleGridStartingPosition[1] - (y * MODULE_WIDTH))
+                    self.add(self.moduleDebug)
+
+                # Render Cockpit Module
+                elif ModuleGrid[x][y] == "COCKPIT":
+                    self.moduleDebug = cockpitModule.CockpitModule()
+                    moduleGridStartingPosition = ((CRAFT_SIZE[0] / 2) - (MODULE_WIDTH / 2),
+                                                  (CRAFT_SIZE[1] / 2) - (MODULE_WIDTH / 2))
+                    self.moduleDebug.position = (moduleGridStartingPosition[0] * -1 + (x * MODULE_WIDTH),
+                                                 moduleGridStartingPosition[1] - (y * MODULE_WIDTH))
+                    self.add(self.moduleDebug)
+
+                # Render Power Module
+                elif ModuleGrid[x][y] == "POWER":
+                    self.moduleDebug = cauldronModule.CauldronModule()
+                    moduleGridStartingPosition = ((CRAFT_SIZE[0] / 2) - (MODULE_WIDTH / 2),
+                                                  (CRAFT_SIZE[1] / 2) - (MODULE_WIDTH / 2))
+                    self.moduleDebug.position = (moduleGridStartingPosition[0] * -1 + (x * MODULE_WIDTH),
+                                                 moduleGridStartingPosition[1] - (y * MODULE_WIDTH))
+                    self.add(self.moduleDebug)
+
+                # Render Wand Module
+                elif ModuleGrid[x][y] == "WAND":
+                    self.moduleDebug = wandModule.WandModule()
+                    moduleGridStartingPosition = ((CRAFT_SIZE[0] / 2) - (MODULE_WIDTH / 2),
+                                                  (CRAFT_SIZE[1] / 2) - (MODULE_WIDTH / 2))
+                    self.moduleDebug.position = (moduleGridStartingPosition[0] * -1 + (x * MODULE_WIDTH),
+                                                 moduleGridStartingPosition[1] - (y * MODULE_WIDTH))
+                    self.add(self.moduleDebug)
+
         pass
 
     def shoot(self, canvas):
