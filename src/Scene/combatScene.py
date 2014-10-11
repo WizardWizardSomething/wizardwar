@@ -7,7 +7,7 @@ from cocos.scenes import FlipX3DTransition
 import pyglet
 from cocos.audio.pygame.music import *
 import os
-from Objects import ship, enemyships, explosion
+from Objects import ship, enemyships, explosion, pellet
 from cocos.audio.pygame.music import *
 import random
 
@@ -95,7 +95,7 @@ class CombatScene( cocos.scene.Scene ):
         self.enemyTimer += 1
         if self.enemyTimer % 100 == 0:
             for x in xrange(random.randint(0, 10)):
-                newEnemy = enemyships.Enemy((0, random.randint(0, 768)), random.randint(180, 350), random.randint(50, 1000))
+                newEnemy = enemyships.Enemy((0, random.randint(0, 768)), random.randint(200, 340), random.randint(50, 1000))
                 self.collisionManager.add(newEnemy)
                 self.add(newEnemy)
                 self.enemyList.append(newEnemy)
@@ -103,8 +103,13 @@ class CombatScene( cocos.scene.Scene ):
         if not self.enemyList: return
         for ship in self.enemyList:
             for item in map(str, self.collisionManager.objs_colliding(ship)):
-                if 'pellet.Pellet' in item:
-                    ship.health -= 50
+                if 'Pellet'.upper() not in item.upper(): continue
+                ship.health -= 50
+                for bullet in self.bookCraft.bulletList:
+                    if bullet in self.collisionManager.objs_colliding(ship):
+                        self.collisionManager.remove_tricky(bullet)
+                        self.remove(bullet)
+                        self.bookCraft.bulletList.remove(bullet)
                 if 'ship.Ship' in item:
                     cocos.director.director.replace(FlipX3DTransition(gameOver(),duration=1))
 
