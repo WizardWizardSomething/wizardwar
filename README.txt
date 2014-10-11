@@ -11,6 +11,9 @@ To run this game, the following programs need to be installed:
 -Pygame
 -Cocos2D
 -Pyglet
+
+If you have linuxm there is a binary package on the contest page all packaged up:
+https://pyweek.org/e/wws/
 -----------------------------------------------------------------
 
 
