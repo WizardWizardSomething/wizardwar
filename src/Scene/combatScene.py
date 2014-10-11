@@ -4,8 +4,9 @@ from Layers import titleText
 import pyglet
 from cocos.audio.pygame.music import *
 import os
-from Objects import ship
+from Objects import ship, enemy
 from cocos.audio.pygame.music import *
+import random
 
 #test imports
 from pyglet.window import key
@@ -17,6 +18,10 @@ class CombatScene( cocos.scene.Scene ):
         # Initialize the ship
         self.bookCraft = ship.Ship()
         #self.bookCraft = bookCraft()
+
+        # Initialize the enemies
+        self.enemyList = []
+        self.enemyTimer = 0
 
         self.roomBorder = roomBorder()
         self.add(self.roomBorder)
@@ -71,3 +76,16 @@ class CombatScene( cocos.scene.Scene ):
     def mainCombatTimer(self, test):
         self.bookCraft.updateCraftVelocity()
         self.bookCraft.updateBulletPosition()
+        self.updateEnemies()
+
+    def updateEnemies(self):
+        self.enemyTimer += 1
+        if self.enemyTimer % 100 == 0:
+            for x in xrange(random.randint(0, 10)):
+                newEnemy = enemy.Enemy((0, random.randint(0, 768)), random.randint(180, 350), random.randint(50, 1000))
+                self.add(newEnemy)
+                self.enemyList.append(newEnemy)
+
+        if not self.enemyList: return
+        for ship in self.enemyList:
+            ship.fly()

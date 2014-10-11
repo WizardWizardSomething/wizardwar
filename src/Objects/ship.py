@@ -184,8 +184,6 @@ class Ship(cocos.sprite.Sprite):
                                                  moduleGridStartingPosition[1] - (y * MODULE_WIDTH))
                     self.add(self.moduleDebug)
 
-        pass
-
     def shoot(self, canvas):
         self.canvas = canvas
         bullet = pellet.Pellet(self.point, self.rotation)
