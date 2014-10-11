@@ -1,13 +1,13 @@
 from Layers.roomBorder import roomBorder
-from Layers.craftLayer import bookCraft
 import cocos
 from Layers import titleText
 from cocos.collision_model import CollisionManagerBruteForce
 import pyglet
 from cocos.audio.pygame.music import *
 import os
-from Objects import ship
+from Objects import ship, enemyships
 from cocos.audio.pygame.music import *
+import random
 
 #test imports
 from pyglet.window import key
@@ -22,6 +22,10 @@ class CombatScene( cocos.scene.Scene ):
         #self.bookCraft = bookCraft()
 
         self.collisionManager = CollisionManagerBruteForce()
+        # Initialize the enemies
+        self.enemyList = []
+        self.enemyTimer = 0
+
         self.roomBorder = roomBorder()
         self.collisionManager.add(self.bookCraft)
         self.roomBorder.addTilesToCollision(self.collisionManager)
@@ -37,7 +41,7 @@ class CombatScene( cocos.scene.Scene ):
         self.bookCraft.rotate((x, y))
 
     def on_mouse_press(self, *args):
-        print args
+        self.bookCraft.shoot(self)
 
     def on_key_press(self, key, modifiers):
         # Determine what direction the ship is moving
@@ -76,7 +80,21 @@ class CombatScene( cocos.scene.Scene ):
     # The update loop for the combat scene
     def mainCombatTimer(self, test):
         self.bookCraft.updateCraftVelocity()
+        self.bookCraft.updateBulletPosition()
+        self.updateEnemies()
         self.bookCraft.updateCollisionPos()
         self.roomBorder.updateCollisionPos()
         if(len(self.collisionManager.objs_colliding(self.bookCraft))>0):
             self.bookCraft.reverseDirection()
+
+    def updateEnemies(self):
+        self.enemyTimer += 1
+        if self.enemyTimer % 100 == 0:
+            for x in xrange(random.randint(0, 10)):
+                newEnemy = enemyships.Enemy((0, random.randint(0, 768)), random.randint(180, 350), random.randint(50, 1000))
+                self.add(newEnemy)
+                self.enemyList.append(newEnemy)
+
+        if not self.enemyList: return
+        for ship in self.enemyList:
+            ship.fly()
