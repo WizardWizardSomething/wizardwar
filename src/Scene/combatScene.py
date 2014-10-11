@@ -1,4 +1,5 @@
 from Layers.roomBorder import roomBorder
+from Layers.craftLayer import bookCraft
 import cocos
 from Layers import titleText
 import pyglet
@@ -16,6 +17,8 @@ class CombatScene( cocos.scene.Scene ):
 
         # Initialize the ship
         self.bookCraft = ship.Ship()
+        #self.bookCraft = bookCraft()
+
         self.roomBorder = roomBorder()
         self.add(self.roomBorder)
         self.add(self.bookCraft )

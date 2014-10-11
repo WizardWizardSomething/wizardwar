@@ -1,4 +1,5 @@
 from __future__ import division
+from Objects import moduleTest
 import os
 import cocos
 from cocos.sprite import *
@@ -10,6 +11,10 @@ import math
 class Ship(cocos.sprite.Sprite):
     def __init__(self):
         super( Ship, self ).__init__(image.load(os.path.normpath(r'../assets/Graphics/BookCraft.png')))
+
+        self.moduleDebug = moduleTest.TestModule()
+        self.add(self.moduleDebug)
+
         self.position = (250,250)
         self.centerPoint = self.get_rect().center
         self.midline = (self.centerPoint, self.get_rect().midtop)
@@ -93,3 +98,8 @@ class Ship(cocos.sprite.Sprite):
 
     def calcVector(self, tupleOfPts):
         return(tupleOfPts[0][0]-tupleOfPts[0][1], tupleOfPts[0][1]-tupleOfPts[1][1])
+
+    # Draw the modules on top of the ship based on the ships position and the
+    # layout of the modules
+    def drawModules(self):
+        pass
