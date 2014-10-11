@@ -13,3 +13,9 @@ class labelClass(cocos.text.Label):
             self.element.color = (255,255,55,255)
         else:
             self.element.color = (255,255,255,255)
+
+    def setColor(self,color):
+        self.element.color = color
+
+    def setBold(self,bool):
+        self.element.bold = bool
