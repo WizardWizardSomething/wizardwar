@@ -189,6 +189,7 @@ class Ship(cocos.sprite.Sprite):
     def shoot(self, canvas):
         self.canvas = canvas
         bullet = pellet.Pellet(self.point, self.rotation)
+        canvas.collisionManager.add(bullet)
         canvas.add(bullet)
         self.bulletList.append(bullet)
 
@@ -200,10 +201,12 @@ class Ship(cocos.sprite.Sprite):
             bullet.do(MoveBy((dx, dy), 0))
 
             if bullet.time_alive > 10:
+                self.canvas.collisionManager.remove_tricky(bullet)
                 self.canvas.remove(bullet)
                 self.bulletList.remove(bullet)
             else:
                 bullet.time_alive += 1
+                bullet.updateCollisionPos()
 
     def point_pos(self, x0, y0, d, theta):
         theta_rad = math.pi/2 - math.radians(theta)

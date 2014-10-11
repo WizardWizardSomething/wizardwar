@@ -5,7 +5,7 @@ from cocos.collision_model import CollisionManagerBruteForce
 import pyglet
 from cocos.audio.pygame.music import *
 import os
-from Objects import ship, enemyships
+from Objects import ship, enemyships, explosion
 from cocos.audio.pygame.music import *
 import random
 
@@ -25,6 +25,7 @@ class CombatScene( cocos.scene.Scene ):
         # Initialize the enemies
         self.enemyList = []
         self.enemyTimer = 0
+        self.explosionList = []
 
         self.roomBorder = roomBorder()
         self.collisionManager.add(self.bookCraft)
@@ -84,6 +85,7 @@ class CombatScene( cocos.scene.Scene ):
         self.updateEnemies()
         self.bookCraft.updateCollisionPos()
         self.roomBorder.updateCollisionPos()
+        self.updateExplosions()
         if(len(self.collisionManager.objs_colliding(self.bookCraft))>0):
             self.bookCraft.reverseDirection()
 
@@ -92,14 +94,39 @@ class CombatScene( cocos.scene.Scene ):
         if self.enemyTimer % 100 == 0:
             for x in xrange(random.randint(0, 10)):
                 newEnemy = enemyships.Enemy((0, random.randint(0, 768)), random.randint(180, 350), random.randint(50, 1000))
+                self.collisionManager.add(newEnemy)
                 self.add(newEnemy)
                 self.enemyList.append(newEnemy)
 
         if not self.enemyList: return
         for ship in self.enemyList:
+            for item in map(str, self.collisionManager.objs_colliding(ship)):
+                if 'pellet.Pellet' in item:
+                    ship.health -= 50
+
+            # check if this should be dead
+            if ship.health <= 0:
+                splosion = explosion.Explosion(ship.get_rect().center)
+                self.add(splosion)
+                self.explosionList.append(splosion)
+                self.collisionManager.remove_tricky(ship)
+                self.remove(ship)
+                self.enemyList.remove(ship)
+
             ship.fly()
             if ship.time_alive >= 500:
+                self.collisionManager.remove_tricky(ship)
                 self.remove(ship)
                 self.enemyList.remove(ship)
             else:
+                ship.updateCollisionPos()
                 ship.time_alive += 1
+
+    def updateExplosions(self):
+        if not self.explosionList: return
+        for splosion in self.explosionList:
+            if splosion.time_alive > 5:
+                self.remove(splosion)
+                self.explosionList.remove(splosion)
+                continue
+            splosion.time_alive += 1
