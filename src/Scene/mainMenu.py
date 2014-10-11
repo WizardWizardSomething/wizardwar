@@ -3,6 +3,7 @@ from Layers import titleText
 import pyglet
 from cocos.audio.pygame.music import *
 import os
+from Scene import combatScene
 
 
 class mainMenu(cocos.scene.Scene):
@@ -24,6 +25,9 @@ class mainMenu(cocos.scene.Scene):
         elif(key==pyglet.window.key.ENTER):
             if(self.title.cursorPosition==1):
                 exit()
+            elif(self.title.cursorPosition==0):
+                nextScene = combatScene.CombatScene()
+                cocos.director.director.replace(nextScene)
 
     def on_enter(self):
         super(mainMenu,self).on_enter()
@@ -32,4 +36,5 @@ class mainMenu(cocos.scene.Scene):
     def on_exit(self):
         super(mainMenu,self).on_exit()
         cocos.director.director.window.remove_handlers(self)
+        stop()
 
