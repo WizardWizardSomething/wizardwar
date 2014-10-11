@@ -18,3 +18,6 @@ class Ship( ):
 
     def draw(self):
         self.sprite.draw()
+
+    def rotate(self, ):
+        pass
