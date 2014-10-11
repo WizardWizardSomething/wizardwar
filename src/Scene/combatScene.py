@@ -1,3 +1,4 @@
+from Layers.roomBorder import roomBorder
 import cocos
 from Layers import titleText
 import pyglet
@@ -10,6 +11,8 @@ class CombatScene( cocos.scene.Scene ):
     def __init__(self):
         super( CombatScene, self ).__init__()
         self.bookCraft = ship.Ship()
+        self.roomBorder = roomBorder()
+        self.add(self.roomBorder)
         self.add(self.bookCraft )
 
     def on_mouse_motion(self, x, y, dx, dy):
