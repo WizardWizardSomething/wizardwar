@@ -35,6 +35,7 @@ class Ship(cocos.sprite.Sprite):
         self.craft_y_velocity = 0
 
     def move(self, dx, dy):
+        self.point = (self.point_pos(self.getCenter()[0], self.getCenter()[1], -100, self.rotation))
         move = MoveBy((dx, dy))
         self.do(move)
         self.centerPoint = self.get_AABB().center
