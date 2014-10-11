@@ -1,6 +1,7 @@
 import cocos
 from Layers import titleText
 import pyglet
+from cocos.audio.pygame.music import *
 
 
 class mainMenu(cocos.scene.Scene):
@@ -10,6 +11,9 @@ class mainMenu(cocos.scene.Scene):
         self.enable_handlers()
         self.title = titleText.titleText()
         self.add(self.title)
+        mixer.init()
+        load(r'..\assets/RoRNewTheme.wav')
+        play(loops=1)
 
     def on_key_press(self,key,modifiers):
         if(key==pyglet.window.key.DOWN):
