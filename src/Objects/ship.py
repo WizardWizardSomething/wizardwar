@@ -4,6 +4,7 @@ import cocos
 from cocos.sprite import *
 from pyglet import image
 from cocos.actions import *
+import math
 
 
 class Ship(cocos.sprite.Sprite):
@@ -79,21 +80,10 @@ class Ship(cocos.sprite.Sprite):
         self.move(self.craft_x_velocity, self.craft_y_velocity)
 
     def rotate(self, mousePos):
-
-        # newLine = (self.getCenter(), mousePos)
-        #
-        # centerVector = (0, 60)
-        # newVector = self.calcVector(newLine)
-        # print centerVector, newVector
-        # # if newVector[1] < 0 and centerVector[1] < 0:
-        # #     newVector = (newVector[0], abs(newVector[1]))
-        #
-        # angleOfRot = self.angle_between(centerVector, newVector)
-        # print angleOfRot
-        # self.do(RotateTo(90, 0))
-        # self.midline = self.getMidline()
-        slope = (mousePos[1] - self.getCenter()[1])/(mousePos[0] - self.getCenter()[0])
-        print slope, mousePos
+        angleOfRot = math.atan2(-(mousePos[1] - self.getCenter()[1]), (mousePos[0] - self.getCenter()[0]))
+        angleOfRot %= 2 * math.pi
+        angleOfRot = math.degrees(angleOfRot)
+        self.do(RotateTo(angleOfRot - 90, 0))
 
     def getCenter(self):
         return self.get_rect().center
