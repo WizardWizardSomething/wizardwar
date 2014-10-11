@@ -4,7 +4,7 @@ from Layers import titleText
 import pyglet
 from cocos.audio.pygame.music import *
 import os
-from Objects import ship, enemy
+from Objects import ship, enemyships
 from cocos.audio.pygame.music import *
 import random
 
@@ -82,7 +82,7 @@ class CombatScene( cocos.scene.Scene ):
         self.enemyTimer += 1
         if self.enemyTimer % 100 == 0:
             for x in xrange(random.randint(0, 10)):
-                newEnemy = enemy.Enemy((0, random.randint(0, 768)), random.randint(180, 350), random.randint(50, 1000))
+                newEnemy = enemyships.Enemy((0, random.randint(0, 768)), random.randint(180, 350), random.randint(50, 1000))
                 self.add(newEnemy)
                 self.enemyList.append(newEnemy)
 
