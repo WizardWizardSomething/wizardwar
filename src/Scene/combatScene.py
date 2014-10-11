@@ -1,11 +1,10 @@
 from Layers.roomBorder import roomBorder
-from Layers.craftLayer import bookCraft
 import cocos
 from Layers import titleText
 import pyglet
 from cocos.audio.pygame.music import *
 import os
-from Objects import ship
+from Objects import ship, pellet
 from cocos.audio.pygame.music import *
 
 #test imports
@@ -35,7 +34,7 @@ class CombatScene( cocos.scene.Scene ):
         self.bookCraft.rotate((x, y))
 
     def on_mouse_press(self, *args):
-        print args
+        self.bookCraft.shoot(self)
 
     def on_key_press(self, key, modifiers):
         # Determine what direction the ship is moving
@@ -70,3 +69,4 @@ class CombatScene( cocos.scene.Scene ):
     # The update loop for the combat scene
     def mainCombatTimer(self, test):
         self.bookCraft.updateCraftVelocity()
+        self.bookCraft.updateBulletPosition()
