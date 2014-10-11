@@ -21,7 +21,7 @@ class CombatScene( cocos.scene.Scene ):
         self.add(self.bookCraft )
         self.mouserel = (0, 0)
         mixer.pre_init(44100, -16, 2, 2048)
-        load(os.path.normpath(r'..\assets/RoRFight2.mp3'))
+        load(os.path.normpath(r'../assets/RoRFight2.mp3'))
         play(loops=-1)
 
         self.schedule_interval(self.mainCombatTimer, 0.05)
