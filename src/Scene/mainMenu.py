@@ -11,7 +11,6 @@ class mainMenu(cocos.scene.Scene):
     def __init__(self):
         super(mainMenu, self).__init__()
         background = cocos.sprite.Sprite(pyglet.image.load(os.path.normpath(r'../assets/Graphics/background.jpg')))
-        background.scale=0.6
         self.add(background)
         self.title = titleText.titleText()
         self.add(self.title)
