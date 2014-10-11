@@ -5,6 +5,7 @@ import pyglet
 from cocos.audio.pygame.music import *
 import os
 from Objects import ship
+from cocos.audio.pygame.music import *
 
 #test imports
 from pyglet.window import key
@@ -19,6 +20,9 @@ class CombatScene( cocos.scene.Scene ):
         self.add(self.roomBorder)
         self.add(self.bookCraft )
         self.mouserel = (0, 0)
+        mixer.pre_init(44100, -16, 2, 2048)
+        load(os.path.normpath(r'..\assets/RoRFight2.mp3'))
+        play(loops=-1)
 
         self.schedule_interval(self.mainCombatTimer, 0.05)
         #self.mainCombatTimer(10)
@@ -58,6 +62,7 @@ class CombatScene( cocos.scene.Scene ):
     def on_exit(self):
         super(CombatScene,self).on_exit()
         cocos.director.director.window.remove_handlers(self)
+        stop()
 
     # The update loop for the combat scene
     def mainCombatTimer(self, test):

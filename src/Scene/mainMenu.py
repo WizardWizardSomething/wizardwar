@@ -17,7 +17,7 @@ class mainMenu(cocos.scene.Scene):
         self.add(self.title)
         mixer.init()
         load(os.path.normpath(r'../assets/RoRNewTheme.mp3'))
-        play(loops=1)
+        play(loops=-1)
 
     def on_key_press(self,key,modifiers):
         if(key==pyglet.window.key.DOWN):
@@ -38,5 +38,5 @@ class mainMenu(cocos.scene.Scene):
     def on_exit(self):
         super(mainMenu,self).on_exit()
         cocos.director.director.window.remove_handlers(self)
-        stop()
+        # stop()
 
