@@ -1,6 +1,7 @@
 from Layers.roomBorder import roomBorder
 import cocos
 from Layers import titleText
+from cocos.collision_model import CollisionManagerBruteForce
 import pyglet
 from cocos.audio.pygame.music import *
 import os
@@ -12,6 +13,7 @@ import random
 from pyglet.window import key
 
 class CombatScene( cocos.scene.Scene ):
+    collisionManager = None
     def __init__(self):
         super( CombatScene, self ).__init__()
 
@@ -19,11 +21,14 @@ class CombatScene( cocos.scene.Scene ):
         self.bookCraft = ship.Ship()
         #self.bookCraft = bookCraft()
 
+        self.collisionManager = CollisionManagerBruteForce()
         # Initialize the enemies
         self.enemyList = []
         self.enemyTimer = 0
 
         self.roomBorder = roomBorder()
+        self.collisionManager.add(self.bookCraft)
+        self.roomBorder.addTilesToCollision(self.collisionManager)
         self.add(self.roomBorder)
         self.add(self.bookCraft )
         self.mouserel = (0, 0)
@@ -77,6 +82,10 @@ class CombatScene( cocos.scene.Scene ):
         self.bookCraft.updateCraftVelocity()
         self.bookCraft.updateBulletPosition()
         self.updateEnemies()
+        self.bookCraft.updateCollisionPos()
+        self.roomBorder.updateCollisionPos()
+        if(len(self.collisionManager.objs_colliding(self.bookCraft))>0):
+            self.bookCraft.reverseDirection()
 
     def updateEnemies(self):
         self.enemyTimer += 1

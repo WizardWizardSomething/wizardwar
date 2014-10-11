@@ -1,5 +1,6 @@
 from Objects.wall import Wall
 import cocos
+from cocos.euclid import Vector2
 
 
 class roomBorder(cocos.layer.Layer):
@@ -51,3 +52,12 @@ class roomBorder(cocos.layer.Layer):
                     item.position = (x+16,y+16)
                     self.add(item)
                     self.tileList.append(item)
+
+    def addTilesToCollision(self,cm):
+        for tile in self.tileList:
+            cm.add(tile)
+
+    def updateCollisionPos(self):
+        for tile in self.tileList:
+            tile.cshape.center = Vector2(tile.get_rect().center[0],tile.get_rect().center[1])
+            tile.cshape.r = tile.width/2

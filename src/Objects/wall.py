@@ -1,4 +1,6 @@
 import cocos
+from cocos.collision_model import CircleShape
+from cocos.euclid import Vector2
 import os
 from pyglet import image
 
@@ -21,3 +23,4 @@ class Wall(cocos.sprite.Sprite):
             super( Wall, self ).__init__(image.load(os.path.normpath(r'../assets/Graphics/wall_part-0-2.png')))
         if(not left and right and not up and down):
             super( Wall, self ).__init__(image.load(os.path.normpath(r'../assets/Graphics/wall_part-2-2.png')))
+        self.cshape = CircleShape(Vector2(self.get_rect().center[0],self.get_rect().center[1]),self.width/2)

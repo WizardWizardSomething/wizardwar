@@ -1,10 +1,11 @@
 from __future__ import division
-from Objects import moduleTest, cauldronModule, cockpitModule, crateModule, propulsionModule, wandModule
+from cocos.collision_model import CircleShape
+from Objects import cauldronModule, cockpitModule, crateModule, propulsionModule, wandModule
 import os
 import cocos
-from cocos.sprite import *
 from pyglet import image
 from cocos.actions import *
+from cocos.euclid import Vector2
 import math
 import pellet
 
@@ -19,6 +20,7 @@ class Ship(cocos.sprite.Sprite):
         self.bulletList = []
         self.centerPoint = self.get_rect().center
         self.midline = (self.centerPoint, self.get_rect().midtop)
+        self.cshape = CircleShape(Vector2(self.centerPoint[0],self.centerPoint[1]),self.width/2)
 
         # Constants for craft movement
         self.CRAFT_MAX_VELOCITY = 1000
@@ -206,3 +208,17 @@ class Ship(cocos.sprite.Sprite):
     def point_pos(self, x0, y0, d, theta):
         theta_rad = math.pi/2 - math.radians(theta)
         return x0 + d*math.cos(theta_rad), y0 + d*math.sin(theta_rad)
+
+    def updateCollisionPos(self):
+        self.cshape.center = Vector2(self.centerPoint[0],self.centerPoint[1])
+        self.cshape.r = self.width/2
+
+    def reverseDirection(self):
+        if(self.craftMovingLeft):
+            self.craft_x_velocity = 1
+        if(self.craftMovingDown):
+            self.craft_y_velocity = 1
+        if(self.craftMovingRight):
+            self.craft_x_velocity = -1
+        if(self.craftMovingUp):
+            self.craft_y_velocity = -1
