@@ -13,6 +13,7 @@ class Enemy(cocos.sprite.Sprite):
         self.health = 100
         self.angle = angle
         self.speed = speed
+        self.time_alive = 0
 
     def fly(self):
         newPoint = self.point_pos(self.position[0], self.position[1], -self.speed, self.angle)

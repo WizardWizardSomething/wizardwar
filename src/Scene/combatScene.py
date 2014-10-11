@@ -89,3 +89,8 @@ class CombatScene( cocos.scene.Scene ):
         if not self.enemyList: return
         for ship in self.enemyList:
             ship.fly()
+            if ship.time_alive >= 500:
+                self.remove(ship)
+                self.enemyList.remove(ship)
+            else:
+                ship.time_alive += 1
